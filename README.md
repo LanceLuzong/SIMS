@@ -1,2 +1,2 @@
-# SIMS
-Group finals project
+# SIMS - Student Information Mangemnet System
+
