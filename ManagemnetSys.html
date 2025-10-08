@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Information Management System</title>
+<link rel="stylesheet" href="ManagemntSysD.css">
+
+</head>
+<body>
+    <div class="header">
+  <img src="/images/IITI logo.jpg" alt="Logo" class="logo">
+  <div class="title">
+    <h1>Student Information</h1>
+    <h2>Management System</h2>
+  </div>
+</div>
+
+
+<br>
+
+<div class="search-container">
+  <p> Search Here</p>
+  <input type="text" id="search" placeholder="Search..." onkeyup="searchRecords()">
+</div>
+
+
+<div class="form-container">
+  <h3>Add / Edit Record</h3>
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="StudentNumber" placeholder="Student Number">
+    <input type="text" id="YearLevel" placeholder="Year Level">
+    <input type="text" id="Course" placeholder="Course">
+  <button onclick="saveRecord()">Save</button>
+</div>
+
+
+<div class="Deleted-Records">
+  <p1>See Deleted Records: </p1>
+    <a href="Deleted-Records.html" target=_self title="View Deleted Records">
+      Deleted Records
+    </a>
+</div>
+
+<div class="table-container">
+  <h3>Student Records</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Student Number</th>
+          <th>Year Level</th>
+          <th>Course</th>
+          <th>Edit / Delete</th>
+      </tr>
+    </thead>
+    <tbody id="recordTable"></tbody>
+    </table>
+</div>
+
+<script src="ManagementSysJS.js"></script>
+</body>
+</html>

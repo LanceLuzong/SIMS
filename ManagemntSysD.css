@@ -1,0 +1,67 @@
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+background: #eaf1e8;
+}
+.header {
+  display: flex;             
+  align-items: center;      
+  justify-content: center;   
+  gap: 15px;                  
+}
+
+.logo {
+  width: 80px;                
+  height: auto;
+  border-radius: 60%;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+.title h2 {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+
+.form-container, .search-container, .record-table, .Deleted-Records, .deleted-table {
+background: #fff;
+padding: 15px;
+margin-bottom: 20px;
+border-radius: 10px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.Back-Main {
+background-color: #fff;
+padding: 5px;
+border-radius: 10px;
+}
+
+
+input, button {
+padding: 8px;
+margin: 5px;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+}
+th, td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: center;
+}
+th {
+background: #018136;
+color: white;
+}
+button {
+cursor: pointer;
+}
+.edit-btn { background: #ffc107; border: none; }
+.delete-btn { background: #dc3545; border: none; color: white; }
+.restore-btn { background: #28a745; border: none; color: white; }
