@@ -63,5 +63,6 @@ button {
 cursor: pointer;
 }
 .edit-btn { background: #ffc107; border: none; }
-.delete-btn { background: #dc3545; border: none; color: white; }
+.delete-btn { background: #ff0019; border: none; color: white; }
 .restore-btn { background: #28a745; border: none; color: white; }
+.permanentlydelete-btn { background: #ff0019; border: none; color: white; }
