@@ -3,6 +3,18 @@ let records = JSON.parse(localStorage.getItem("records")) || [];
 let deletedRecords = JSON.parse(localStorage.getItem("deletedRecords")) || [];
 let editIndex = -1;
 
+// Clean up empty records from localStorage
+function cleanupData() {
+  records = records.filter(rec => rec && typeof rec === 'object' && rec.name);
+  deletedRecords = deletedRecords.filter(rec => rec && typeof rec === 'object' && rec.name);
+  
+  localStorage.setItem("records", JSON.stringify(records));
+  localStorage.setItem("deletedRecords", JSON.stringify(deletedRecords));
+  
+  console.log("Cleaned records:", records);
+  console.log("Cleaned deletedRecords:", deletedRecords);
+}
+
 //DISPLAY ACTIVE RECORDS
 function displayRecords(data = records) {
   const table = document.getElementById("recordTable");
@@ -24,20 +36,37 @@ function displayRecords(data = records) {
   });
 }
 
-
+//DISPLAY DELETED RECORDS
 function displayDeleted(data = deletedRecords) {
+  console.log("displayDeleted called with:", data);
+  console.log("deletedRecords from localStorage:", JSON.parse(localStorage.getItem("deletedRecords")));
   const table = document.getElementById("DeletedRecordTable");
-  if (!table) return; // 
+  if (!table) {
+    console.log("DeletedRecordTable not found");
+    return;
+  }
   table.innerHTML = "";
+  
+  if (data.length === 0) {
+    table.innerHTML = '<tr><td colspan="5">No deleted records found</td></tr>';
+    return;
+  }
 
   data.forEach((rec, index) => {
+    // Skip empty records
+    if (!rec || typeof rec !== 'object') {
+      console.log("Skipping invalid record at index", index, ":", rec);
+      return;
+    }
+    
     let row = `<tr>
-      <td>${rec.name}</td>
-      <td>${rec.StudentNumber}</td>
-      <td>${rec.YearLevel}</td>
-      <td>${rec.Course}</td>
+      <td>${rec.name || 'N/A'}</td>
+      <td>${rec.StudentNumber || 'N/A'}</td>
+      <td>${rec.YearLevel || 'N/A'}</td>
+      <td>${rec.Course || 'N/A'}</td>
       <td>
         <button class="restore-btn" onclick="restoreRecord(${index})">Restore</button>
+        <button class="permanentlydelete-btn" onclick="permanentlyDeleteRecord(${index})">Permantly Delete</button>
       </td>
     </tr>`;
     table.innerHTML += row;
@@ -46,17 +75,27 @@ function displayDeleted(data = deletedRecords) {
 }
 
 
-
 // DELETE RECORD
 function deleteRecord(index) {
-  deletedRecords.push(records[index]);   
-  records.splice(index, 1);              
+  // Checking 
+  if (index >= 0 && index < records.length && records[index]) {
+    deletedRecords.push(records[index]);   
+    records.splice(index, 1);              
 
-  localStorage.setItem("records", JSON.stringify(records));
+    localStorage.setItem("records", JSON.stringify(records));
+    localStorage.setItem("deletedRecords", JSON.stringify(deletedRecords));
+
+    displayRecords();
+    displayDeleted();
+  } else {
+    console.error("Invalid record index:", index);
+  }
+}
+// PERMANENTLY DELETE
+function permanentlyDeleteRecord(index) {
+  deletedRecords.splice(index, 1);
   localStorage.setItem("deletedRecords", JSON.stringify(deletedRecords));
-
-  displayRecords();
-  displayDeleted(); 
+  displayDeleted();
 }
 
 // RESTORE RECORD
@@ -67,10 +106,20 @@ function restoreRecord(index) {
   localStorage.setItem("records", JSON.stringify(records));
   localStorage.setItem("deletedRecords", JSON.stringify(deletedRecords));
 
+
   displayRecords();
   displayDeleted();
-}
+};
 
+
+// EDIT RECORD
+function editRecord(index) {
+  document.getElementById("name").value = records[index].name;
+  document.getElementById("StudentNumber").value = records[index].StudentNumber;
+  document.getElementById("YearLevel").value = records[index].YearLevel;
+  document.getElementById("Course").value = records[index].Course;
+  editIndex = index;
+}
 // SAVE  / EDIT RECORD
 function saveRecord() {
   const name = document.getElementById("name").value;
@@ -93,21 +142,13 @@ function saveRecord() {
   localStorage.setItem("records", JSON.stringify(records));
   displayRecords();
 
-  // Clear inputs
+  // Clear after saving
   document.getElementById("name").value = "";
   document.getElementById("StudentNumber").value = "";
   document.getElementById("YearLevel").value = "";
   document.getElementById("Course").value = "";
 }
 
-// EDIT RECORD
-function editRecord(index) {
-  document.getElementById("name").value = records[index].name;
-  document.getElementById("StudentNumber").value = records[index].StudentNumber;
-  document.getElementById("YearLevel").value = records[index].YearLevel;
-  document.getElementById("Course").value = records[index].Course;
-  editIndex = index;
-}
 
 // SEARCH 
 function searchRecords() {
@@ -116,11 +157,14 @@ function searchRecords() {
     rec.name.toLowerCase().includes(keyword) ||
     rec.StudentNumber.toLowerCase().includes(keyword) ||
     rec.YearLevel.toLowerCase().includes(keyword) ||
-    rec.Course.toLowerCase().includes(keyword)
+    rec.Course.toLowerCase().includes(keyword) 
   );
   displayRecords(filtered);
 }
 
 
+// displays 
+cleanupData();
 displayRecords();
 displayDeleted();
+
