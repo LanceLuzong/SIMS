@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deleted Records</title>
-    <link rel="stylesheet" href="ManagemntSysD.css">
-<script src="ManagementSysJS.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deleted Records</title>
+  <link rel="stylesheet" href="ManagemntSysD.css">
 </head>
 <body>
-    <h1>Deleted Records</h1>
+  <h1>Deleted Records</h1>
+
+  <div class="deleted-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Student Number</th>
+          <th>Year Level</th>
+          <th>Course</th>
+          <th>Recover / Permantly delete</th>
+        </tr>
+      </thead>
+      <tbody id="DeletedRecordTable"></tbody>
+    </table>
+  </div>
 
 
-    <div class ="Back-Main">
-    <a href="ManagemnetSys.html" target=_self title="Back to Main Page">
-        Back to Main Page
+  <div class="Back-Main">
+    <a href="ManagemnetSys.html" target="_self" title="Back to Main Page">
+      Back to Main Page
     </a>
-    </div>
+  </div>
+
+  <script src="ManagementSysJS.js"></script>
+  <script>
+  window.onload = function() {
+    displayDeleted();
+  };
+</script>
+
 </body>
+</html>
 </html>
